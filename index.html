@@ -1,153 +1,97 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>In Memoriam</title>
+<meta charset="UTF-8">
+<title>In Memoriam</title>
 </head>
 
-<body style="margin:0; background:#e9e7e1; font-family:Georgia, serif; text-align:center;">
+<body style="margin:0;background:#e9e7e1;font-family:Georgia,serif;text-align:center;">
 
-  <div style="max-width:1100px; margin:0 auto; padding:40px 20px;">
+<div style="max-width:1100px;margin:0 auto;padding:40px 20px;">
 
-    <h1 style="font-size:56px; margin-bottom:10px; color:#2f2418;">In Memoriam</h1>
-    
-    <iframe src="https://assets.pinterest.com/ext/embed.html?id=19773685859239052" height="715" width="345" frameborder="0" scrolling="no" ></iframe>
-    
-    <p style="font-size:24px; color:#5b4a35; margin-bottom:40px;">
-    Este site é uma homenagem em memória dos falecidos e das pessoas que se encontram em vida.
-    Caso queira ter seu nome inscrito nesta memória, entre em contato pelo e-mail
-    <a href="mailto:pegri35@gmail.com" style="color:#b30000; font-weight:bold; text-decoration:none;">
-    pegri35@gmail.com
-    </a>
-    </p>
+<h1 style="font-size:56px;margin-bottom:10px;color:#2f2418;">In Memoriam</h1>
 
-    <div style="
-      max-width:920px;
-      margin:40px auto;
-      padding:30px;
-      background:#f5f1e6;
-      border:3px solid #8b7d5a;
-      border-radius:14px;
-      box-shadow:0 0 18px rgba(0,0,0,0.18);
-      color:#3f3123;
-      line-height:1.8;
-    ">
-      <h2 style="margin-top:0; font-size:40px; color:#6a4b2f;">
-        Memória, Oração e Comunhão
-      </h2>
+<iframe src="https://assets.pinterest.com/ext/embed.html?id=19773685859239052"
+height="715" width="345" frameborder="0" scrolling="no"></iframe>
 
-      <p style="font-size:24px;">
-        Neste espaço recordamos com carinho aqueles que já partiram desta vida
-        e também aqueles que continuam sua caminhada entre nós.
-      </p>
+<p style="font-size:24px;color:#5b4a35;margin-bottom:40px;">
+Este site é uma homenagem em memória dos falecidos e das pessoas que se encontram em vida.
+Caso queira ter seu nome inscrito nesta memória, entre em contato pelo e-mail
+<a href="mailto:pegri35@gmail.com" style="color:#b30000;font-weight:bold;text-decoration:none;">
+pegri35@gmail.com
+</a>
+</p>
 
-      <p style="font-size:24px;">
-        A memória dos falecidos é um gesto de amor, gratidão e fidelidade.
-        Recordar seus nomes é manter viva a história, a fé e os laços que Deus
-        permitiu que existissem entre nós. Ao lembrar daqueles que já partiram,
-        elevamos nossas orações pedindo descanso eterno, paz e luz para suas almas.
-      </p>
+<div style="
+max-width:920px;
+margin:40px auto;
+padding:30px;
+background:#f5f1e6;
+border:3px solid #8b7d5a;
+border-radius:14px;
+box-shadow:0 0 18px rgba(0,0,0,0.18);
+color:#3f3123;
+line-height:1.8;
+">
 
-      <p style="font-size:24px;">
-        Também colocamos em oração todos os que permanecem vivos nesta lista,
-        pedindo proteção, saúde, serenidade, esperança e a presença constante
-        da graça de Deus em suas vidas.
-      </p>
+<h2 style="margin-top:0;font-size:40px;color:#6a4b2f;">Memória, Oração e Comunhão</h2>
 
-      <p style="font-size:24px;">
-        Pedimos a intercessão de <strong>São José</strong>, guardião das famílias,
-        de <strong>Maria Santíssima</strong>, nossa Mãe amorosa, e de
-        <strong>Nosso Senhor Jesus Cristo</strong>, fonte de toda misericórdia,
-        consolo e salvação.
-      </p>
+<p style="font-size:24px;">
+Neste espaço recordamos com carinho aqueles que já partiram desta vida
+e também aqueles que continuam sua caminhada entre nós.
+</p>
 
-      <p style="font-size:24px;">
-        Que também os <strong>Santos Anjos da Guarda</strong> acompanhem cada nome
-        aqui presente, protegendo, guiando, iluminando e apresentando a Deus
-        nossas súplicas com amor e fidelidade.
-      </p>
+</div>
 
-      <p style="font-size:24px; margin-bottom:0;">
-        Que Deus abençoe a todos os que estão nesta memória:
-        os que já partiram e os que continuam sua jornada,
-        envolvendo cada vida com paz, amor e misericórdia.
-      </p>
-    </div>
-    
-   <div id="lista"></div>
+<input
+type="text"
+id="pesquisa"
+placeholder="Pesquisar nome..."
+style="
+width:60%;
+max-width:500px;
+padding:12px;
+font-size:20px;
+margin:20px auto;
+display:block;
+border:2px solid #8b7d5a;
+border-radius:8px;
+background:#f5f1e6;
+font-family:Georgia, serif;
+">
 
-  </div>
+<div id="lista"></div>
+
+</div>
 
 <script>
 
-const campoPesquisa = document.createElement("input");
-campoPesquisa.type = "text";
-campoPesquisa.id = "pesquisa";
-campoPesquisa.placeholder = "Pesquisar nome...";
-campoPesquisa.style = "width:60%;max-width:500px;padding:12px;font-size:20px;margin:20px auto;display:block;border:2px solid #8b7d5a;border-radius:8px;background:#f5f1e6;font-family:Georgia, serif;";
-
-document.body.insertBefore(campoPesquisa, document.getElementById("lista"));
-
 fetch("listas.txt")
-.then(response => response.arrayBuffer())
-.then(buffer => {
+.then(response => response.text())
+.then(text => {
 
-const decoder = new TextDecoder("utf-8");
-const text = decoder.decode(buffer);
 const linhas = text.split(/\r?\n/);
-
-const mensagensFalecidos = [
-"Com carinho e saudade, recordamos sua memória diante de Deus.",
-"Sua lembrança permanece viva em nossos corações.",
-"Rezamos por sua alma com ternura.",
-"Com respeito e saudade lembramos sua história.",
-"Sua memória permanece guardada com amor."
-];
-
-const mensagensVivos = [
-"Seguimos em oração por sua vida.",
-"Que Deus abençoe sua caminhada.",
-"Rezamos por sua saúde e proteção.",
-"Que Jesus, Maria e José guardem sua vida.",
-"Você permanece em nossas orações."
-];
-
-function limpar(valor){
-return (valor || "").replaceAll('"',"").trim();
-}
-
-function limparData(valor){
-const texto = limpar(valor);
-if(!texto) return "";
-return texto.split(" ")[0];
-}
 
 let html = "";
 
-linhas.forEach((linha,indice)=>{
+linhas.forEach((linha)=>{
 
 if(linha.trim()==="") return;
 
 const partes = linha.split(";");
 
-const status = limpar(partes[2]);
-const nascimento = limparData(partes[3]);
-const morte = limparData(partes[4]);
-const nome = limpar(partes[5]);
-const cidade = limpar(partes[6]);
+const status = (partes[2]||"").replaceAll('"',"").trim();
+const nascimento = (partes[3]||"").split(" ")[0];
+const morte = (partes[4]||"").split(" ")[0];
+const nome = (partes[5]||"").replaceAll('"',"").trim();
+const cidade = (partes[6]||"").replaceAll('"',"").trim();
 
 if(!nome) return;
 
-const vivo = status === "Vivo";
+const vivo = status==="Vivo";
 
 const fundo = vivo ? "#eef4e8" : "#f6ece7";
 const borda = vivo ? "#7a8f5d" : "#9a6a5a";
-const titulo = vivo ? "#42552d" : "#6a3d30";
-const faixa = vivo ? "#dce8cf" : "#ead6cb";
-
-const mensagem = vivo
-? mensagensVivos[indice % mensagensVivos.length]
-: mensagensFalecidos[indice % mensagensFalecidos.length];
 
 html += `
 <div style="
@@ -161,19 +105,9 @@ overflow:hidden;
 text-align:left;
 ">
 
-<div style="
-background:${faixa};
-border-bottom:2px solid ${borda};
-padding:16px 22px;
-">
-
-<h3 style="margin:0;font-size:34px;color:${titulo};">
-${nome}
-</h3>
-
-</div>
-
 <div style="padding:22px;color:#3c2f24;">
+
+<h3 style="margin:0 0 10px 0;font-size:34px;">${nome}</h3>
 
 <p style="font-size:23px;"><strong>Cidade:</strong> ${cidade}</p>
 <p style="font-size:23px;"><strong>Nascimento:</strong> ${nascimento}</p>
@@ -184,10 +118,6 @@ vivo
 : `<p style="font-size:23px;"><strong>Falecimento:</strong> ${morte}</p>`
 }
 
-<p style="font-size:22px;font-style:italic;color:#5a4635;">
-${mensagem}
-</p>
-
 </div>
 </div>
 `;
@@ -196,19 +126,14 @@ ${mensagem}
 
 document.getElementById("lista").innerHTML = html;
 
-/* PESQUISA */
+document.getElementById("pesquisa").addEventListener("input",function(){
 
-campoPesquisa.addEventListener("input", function(){
+const termo=this.value.toLowerCase();
+const caixas=document.querySelectorAll("#lista > div");
 
-const termo = this.value.toLowerCase();
-const caixas = document.querySelectorAll("#lista > div");
-
-caixas.forEach(caixa => {
-
-const texto = caixa.innerText.toLowerCase();
-
-caixa.style.display = texto.includes(termo) ? "block" : "none";
-
+caixas.forEach(caixa=>{
+const texto=caixa.innerText.toLowerCase();
+caixa.style.display=texto.includes(termo)?"block":"none";
 });
 
 });
@@ -216,20 +141,8 @@ caixa.style.display = texto.includes(termo) ? "block" : "none";
 })
 .catch(()=>{
 
-document.getElementById("lista").innerHTML = `
-<div style="
-max-width:900px;
-margin:30px auto;
-padding:20px;
-background:#fff4f4;
-border:2px solid #c98c8c;
-border-radius:12px;
-color:#6a2f2f;
-font-size:22px;
-">
-Não foi possível carregar a lista.
-</div>
-`;
+document.getElementById("lista").innerHTML =
+"<p style='font-size:22px;color:red;'>Erro ao carregar lista.</p>";
 
 });
 
