@@ -21,22 +21,37 @@ fetch("listas.txt")
   .then(buffer => {
     const decoder = new TextDecoder("windows-1252");
     const text = decoder.decode(buffer);
-
     const linhas = text.split(/\r?\n/);
-    let html = "<ul style='list-style:none; padding:0;'>";
+
+    let html = "";
 
     linhas.forEach(linha => {
       if (linha.trim() !== "") {
         const partes = linha.split(";");
+
+        const status = (partes[2] || "").replaceAll('"', '').trim();
+        const nascimento = (partes[3] || "").replaceAll('"', '').trim();
+        const morte = (partes[4] || "").replaceAll('"', '').trim();
         const nome = (partes[5] || "").replaceAll('"', '').trim();
         const cidade = (partes[6] || "").replaceAll('"', '').trim();
+
         if (nome) {
-          html += "<li style='margin:8px 0;'>" + nome + " - " + cidade + "</li>";
+          html += "<div style='max-width:700px; margin:20px auto; padding:15px; border:1px solid #ccc; border-radius:10px; text-align:left;'>";
+          html += "<h3 style='margin:0 0 10px 0;'>" + nome + "</h3>";
+          html += "<p><strong>Cidade:</strong> " + cidade + "</p>";
+          html += "<p><strong>Nascimento:</strong> " + nascimento + "</p>";
+
+          if (status === "Vivo") {
+            html += "<p><strong>Status:</strong> Vivo</p>";
+          } else {
+            html += "<p><strong>Falecimento:</strong> " + morte + "</p>";
+          }
+
+          html += "</div>";
         }
       }
     });
 
-    html += "</ul>";
     document.getElementById("lista").innerHTML = html;
   });
 </script>
