@@ -11,9 +11,30 @@
 
 <p>Este site é uma homenagem em memória.</p>
 
-<p>Em breve mais informações.</p>
-<div id="lista">
-  
-</div>
+<p>Lista de pessoas:</p>
+
+<div id="lista"></div>
+
+<script>
+fetch("listas.txt")
+  .then(response => response.text())
+  .then(text => {
+    const linhas = text.split("\n");
+    let html = "<ul>";
+
+    linhas.forEach(linha => {
+      if(linha.trim() !== ""){
+        const partes = linha.split(";");
+        const nome = partes[5];
+        const cidade = partes[6];
+        html += "<li>" + nome + " - " + cidade + "</li>";
+      }
+    });
+
+    html += "</ul>";
+    document.getElementById("lista").innerHTML = html;
+  });
+</script>
+
 </body>
 </html>
