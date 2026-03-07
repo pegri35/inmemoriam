@@ -62,6 +62,8 @@ com paz, esperança e amor.
 
 </div>
 
+<div id="lista"></div>
+
 <script>
 fetch("listas.txt")
   .then(response => response.arrayBuffer())
@@ -73,72 +75,65 @@ fetch("listas.txt")
     const mensagensFalecidos = [
       "Com carinho e saudade, sua memória permanece viva em nossos corações.",
       "Sua lembrança continua iluminando a vida de todos que o conheceram.",
-      "Com respeito e afeto, recordamos sua história e sua presença tão especial.",
-      "A saudade permanece, mas também a gratidão por tudo o que deixou entre nós.",
-      "Sua memória é guardada com amor, ternura e eterna homenagem.",
-      "Que sua lembrança siga trazendo paz, amor e inspiração para todos.",
-      "Com muita saudade, homenageamos uma vida que jamais será esquecida.",
-      "Seu nome permanece marcado com carinho na memória de quem o amou.",
-      "Recordamos com afeto a caminhada e o legado deixado entre nós.",
-      "Sua presença virou lembrança, e sua lembrança virou eternidade em nossos corações."
+      "Com respeito e afeto, recordamos sua história e sua presença.",
+      "A saudade permanece, mas também a gratidão por sua vida.",
+      "Sua memória é guardada com amor e ternura."
     ];
 
     const mensagensVivos = [
-      "Seguimos em contínua oração, com carinho e bênçãos para sua vida.",
-      "Receba nosso afeto e nossas orações, com votos de paz e proteção.",
-      "Que Deus abençoe sua caminhada com saúde, luz e serenidade.",
-      "Com carinho, colocamos sua vida em oração e pedimos muitas graças.",
-      "Que sua jornada seja sempre acompanhada de paz, esperança e amor.",
-      "Com ternura e fé, mantemos você em nossas orações diárias.",
-      "Desejamos bênçãos, proteção e muita luz para sua vida.",
-      "Com afeto fraterno, rezamos por você e por sua caminhada.",
-      "Que nunca lhe faltem paz, cuidado divino e pessoas de bom coração ao redor.",
-      "Você está presente em nossas orações, com carinho, respeito e esperança."
+      "Seguimos em contínua oração por sua vida e caminhada.",
+      "Receba nosso carinho e nossas orações.",
+      "Que Deus abençoe sua jornada com paz e proteção.",
+      "Com fé e esperança, colocamos sua vida em oração.",
+      "Desejamos luz, saúde e bênçãos em sua caminhada."
     ];
 
-    function limpar(valor) {
-      return (valor || "").replaceAll('"', '').trim();
+    function limpar(v){
+      return (v || "").replaceAll('"','').trim();
     }
 
-    function limparData(valor) {
-      const texto = limpar(valor);
-      if (!texto) return "";
-      return texto.split(" ")[0];
+    function limparData(v){
+      const t = limpar(v);
+      return t ? t.split(" ")[0] : "";
     }
 
     let html = "";
 
-    linhas.forEach((linha, indice) => {
-      if (linha.trim() !== "") {
-        const partes = linha.split(";");
+    linhas.forEach((linha,i)=>{
+      if(linha.trim()!==""){
+        const p = linha.split(";");
 
-        const status = limpar(partes[2]);
-        const nascimento = limparData(partes[3]);
-        const morte = limparData(partes[4]);
-        const nome = limpar(partes[5]);
-        const cidade = limpar(partes[6]);
+        const status = limpar(p[2]);
+        const nascimento = limparData(p[3]);
+        const morte = limparData(p[4]);
+        const nome = limpar(p[5]);
+        const cidade = limpar(p[6]);
 
-        if (nome) {
-          const vivo = status === "Vivo";
-          const corFundo = vivo ? "#eef8ee" : "#fff1f1";
-          const corBorda = vivo ? "#7bbf7b" : "#d88a8a";
-          const corTitulo = vivo ? "#216b21" : "#8b2e2e";
-          const mensagem = vivo
-            ? mensagensVivos[indice % mensagensVivos.length]
-            : mensagensFalecidos[indice % mensagensFalecidos.length];
+        if(nome){
 
-          html += "<div style='max-width:760px; margin:20px auto; padding:18px; border:2px solid " + corBorda + "; background:" + corFundo + "; border-radius:14px; text-align:left; box-shadow:0 2px 8px rgba(0,0,0,0.08);'>";
-          html += "<h3 style='margin:0 0 10px 0; color:" + corTitulo + ";'>" + nome + "</h3>";
-          html += "<p><strong>Cidade:</strong> " + cidade + "</p>";
-          html += "<p><strong>Nascimento:</strong> " + nascimento + "</p>";
+          const vivo = status==="Vivo";
 
-          if (vivo) {
-            html += "<p><strong>Status:</strong> Vivo</p>";
+          const fundo = vivo ? "#eef6ee" : "#f7eeee";
+          const borda = vivo ? "#6e9b6e" : "#a96a6a";
+
+          const msg = vivo
+            ? mensagensVivos[i % mensagensVivos.length]
+            : mensagensFalecidos[i % mensagensFalecidos.length];
+
+          html += "<div style='max-width:760px;margin:20px auto;padding:18px;background:"+fundo+";border:2px solid "+borda+";border-radius:14px;text-align:left;'>";
+
+          html += "<h3>"+nome+"</h3>";
+          html += "<p><b>Cidade:</b> "+cidade+"</p>";
+          html += "<p><b>Nascimento:</b> "+nascimento+"</p>";
+
+          if(vivo){
+            html += "<p><b>Status:</b> Vivo</p>";
           } else {
-            html += "<p><strong>Falecimento:</strong> " + morte + "</p>";
+            html += "<p><b>Falecimento:</b> "+morte+"</p>";
           }
 
-          html += "<p style='margin-top:12px; font-style:italic; color:#444;'>" + mensagem + "</p>";
+          html += "<p style='font-style:italic;margin-top:10px;'>"+msg+"</p>";
+
           html += "</div>";
         }
       }
