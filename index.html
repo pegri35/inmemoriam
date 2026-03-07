@@ -73,22 +73,7 @@
         envolvendo cada vida com paz, amor e misericórdia.
       </p>
     </div>
-    <input 
-    type="text" 
-    id="pesquisa" 
-    placeholder="Pesquisar nome..." 
-    style="
-    width:60%;
-    max-width:500px;
-    padding:12px;
-    font-size:20px;
-    margin:20px auto;
-    display:block;
-    border:2px solid #8b7d5a;
-    border-radius:8px;
-    background:#f5f1e6;
-    font-family:Georgia, serif;
-    ">
+    
    <div id="lista"></div>
 
   </div>
@@ -212,6 +197,17 @@
 
         document.getElementById("lista").innerHTML = html;
       })
+      const campoPesquisa = document.getElementById("pesquisa");
+
+campoPesquisa.addEventListener("input", function() {
+  const termo = this.value.toLowerCase();
+  const caixas = document.querySelectorAll("#lista > div");
+
+  caixas.forEach(caixa => {
+    const texto = caixa.innerText.toLowerCase();
+    caixa.style.display = texto.includes(termo) ? "block" : "none";
+  });
+});
       .catch(() => {
         document.getElementById("lista").innerHTML = `
           <div style="
