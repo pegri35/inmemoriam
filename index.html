@@ -34,7 +34,9 @@ color:#3f3123;
 line-height:1.8;
 ">
 
-<h2 style="margin-top:0;font-size:40px;color:#6a4b2f;">Memória, Oração e Comunhão</h2>
+<h2 style="margin-top:0;font-size:40px;color:#6a4b2f;">
+Memória, Oração e Comunhão
+</h2>
 
 <p style="font-size:24px;">
 Neste espaço recordamos com carinho aqueles que já partiram desta vida
@@ -67,84 +69,100 @@ font-family:Georgia, serif;
 <script>
 
 fetch("listas.txt")
-.then(response => response.text())
-.then(text => {
+.then(r=>r.text())
+.then(text=>{
 
-const linhas = text.split(/\r?\n/);
+const linhas=text.split(/\r?\n/)
 
-let html = "";
+const mensagensFalecidos=[
+"Com carinho e saudade, recordamos sua memória diante de Deus.",
+"Sua lembrança permanece viva em nossos corações.",
+"Rezamos por sua alma com ternura.",
+"Recordamos sua história com respeito e saudade.",
+"Seu nome permanece guardado com carinho."
+]
 
-linhas.forEach((linha)=>{
+const mensagensVivos=[
+"Seguimos em oração por sua vida.",
+"Que Deus abençoe sua caminhada.",
+"Rezamos por sua saúde e proteção.",
+"Você permanece em nossas orações.",
+"Que Jesus, Maria e São José guardem sua vida."
+]
 
-if(linha.trim()==="") return;
+function limpar(v){return (v||"").replaceAll('"',"").trim()}
+function limparData(v){const t=limpar(v);if(!t)return"";return t.split(" ")[0]}
 
-const partes = linha.split(";");
+let html=""
 
-const status = (partes[2]||"").replaceAll('"',"").trim();
-const nascimento = (partes[3]||"").split(" ")[0];
-const morte = (partes[4]||"").split(" ")[0];
-const nome = (partes[5]||"").replaceAll('"',"").trim();
-const cidade = (partes[6]||"").replaceAll('"',"").trim();
+linhas.forEach((linha,i)=>{
 
-if(!nome) return;
+if(linha.trim()==="")return
 
-const vivo = status==="Vivo";
+const p=linha.split(";")
 
-const fundo = vivo ? "#eef4e8" : "#f6ece7";
-const borda = vivo ? "#7a8f5d" : "#9a6a5a";
+const status=limpar(p[2])
+const nascimento=limparData(p[3])
+const morte=limparData(p[4])
+const nome=limpar(p[5])
+const cidade=limpar(p[6])
 
-html += `
-<div style="
-max-width:900px;
-margin:28px auto;
-background:${fundo};
-border:3px solid ${borda};
-border-radius:14px;
-box-shadow:0 4px 14px rgba(0,0,0,0.12);
-overflow:hidden;
-text-align:left;
-">
+if(!nome)return
+
+const vivo=status==="Vivo"
+
+const fundo=vivo?"#eef4e8":"#f6ece7"
+const borda=vivo?"#7a8f5d":"#9a6a5a"
+
+const mensagem=vivo
+?mensagensVivos[i%mensagensVivos.length]
+:mensagensFalecidos[i%mensagensFalecidos.length]
+
+html+=`
+<div style="max-width:900px;margin:28px auto;background:${fundo};border:3px solid ${borda};border-radius:14px;box-shadow:0 4px 14px rgba(0,0,0,0.12);overflow:hidden;text-align:left;">
 
 <div style="padding:22px;color:#3c2f24;">
 
-<h3 style="margin:0 0 10px 0;font-size:34px;">${nome}</h3>
+<h3 style="margin:0 0 10px 0;font-size:34px;">
+${nome}
+</h3>
 
 <p style="font-size:23px;"><strong>Cidade:</strong> ${cidade}</p>
 <p style="font-size:23px;"><strong>Nascimento:</strong> ${nascimento}</p>
 
-${
-vivo
+${vivo
 ? `<p style="font-size:23px;"><strong>Status:</strong> Vivo</p>`
-: `<p style="font-size:23px;"><strong>Falecimento:</strong> ${morte}</p>`
-}
+: `<p style="font-size:23px;"><strong>Falecimento:</strong> ${morte}</p>`}
+
+<p style="font-size:22px;margin-top:18px;font-style:italic;color:#5a4635;">
+${mensagem}
+</p>
 
 </div>
 </div>
-`;
+`
 
-});
+})
 
-document.getElementById("lista").innerHTML = html;
+document.getElementById("lista").innerHTML=html
 
 document.getElementById("pesquisa").addEventListener("input",function(){
 
-const termo=this.value.toLowerCase();
-const caixas=document.querySelectorAll("#lista > div");
+const termo=this.value.toLowerCase()
+const caixas=document.querySelectorAll("#lista>div")
 
-caixas.forEach(caixa=>{
-const texto=caixa.innerText.toLowerCase();
-caixa.style.display=texto.includes(termo)?"block":"none";
-});
+caixas.forEach(c=>{
+const texto=c.innerText.toLowerCase()
+c.style.display=texto.includes(termo)?"block":"none"
+})
 
-});
+})
 
 })
 .catch(()=>{
-
-document.getElementById("lista").innerHTML =
-"<p style='font-size:22px;color:red;'>Erro ao carregar lista.</p>";
-
-});
+document.getElementById("lista").innerHTML=
+"<p style='font-size:22px;color:red;'>Erro ao carregar lista.</p>"
+})
 
 </script>
 
