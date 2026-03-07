@@ -78,153 +78,162 @@
 
   </div>
 
-  <script>
-    fetch("listas.txt")
-      .then(response => response.arrayBuffer())
-      .then(buffer => {
-        const decoder = new TextDecoder("utf-8");
-        const text = decoder.decode(buffer);
-        const linhas = text.split(/\r?\n/);
+<script>
 
-        const mensagensFalecidos = [
-          "Com carinho e saudade, recordamos sua memória diante de Deus, certos de que o amor jamais se apaga.",
-          "Sua lembrança permanece viva em nossos corações, acompanhada de oração, respeito e eterna gratidão.",
-          "Rezamos por sua alma com ternura, confiando sua vida à misericórdia infinita de Jesus.",
-          "Sua história continua presente entre nós como sinal de amor, memória e saudade bendita.",
-          "Com afeto e oração, entregamos sua memória ao cuidado de Deus e à proteção da Virgem Maria.",
-          "Seu nome permanece guardado com honra e carinho na lembrança de todos os que o amaram.",
-          "Recordamos sua vida com respeito e saudade, pedindo ao Senhor o descanso eterno e a luz sem fim.",
-          "A memória de quem partiu continua fecunda no coração daqueles que creem, amam e rezam.",
-          "Com profunda estima, elevamos preces por sua alma e agradecemos a Deus por sua existência.",
-          "Sua lembrança segue iluminada pela fé, pela oração e pela esperança da vida eterna."
-        ];
+const campoPesquisa = document.createElement("input");
+campoPesquisa.type = "text";
+campoPesquisa.id = "pesquisa";
+campoPesquisa.placeholder = "Pesquisar nome...";
+campoPesquisa.style = "width:60%;max-width:500px;padding:12px;font-size:20px;margin:20px auto;display:block;border:2px solid #8b7d5a;border-radius:8px;background:#f5f1e6;font-family:Georgia, serif;";
 
-        const mensagensVivos = [
-          "Seguimos em contínua oração por sua vida, pedindo a Deus paz, saúde, proteção e muitas bênçãos.",
-          "Com carinho fraterno, colocamos sua caminhada nas mãos do Senhor, confiando em sua graça.",
-          "Que Jesus, Maria e São José guardem sua vida e conduzam seus passos com amor e proteção.",
-          "Você permanece presente em nossas orações, com votos de serenidade, força e esperança.",
-          "Rezamos para que Deus abençoe sua história com luz, cuidado, saúde e paz no coração.",
-          "Com afeto e fé, entregamos sua vida ao cuidado divino e à proteção dos Santos Anjos da Guarda.",
-          "Que nunca lhe faltem consolo, esperança, saúde e a presença amorosa de Deus em seus dias.",
-          "Sua vida é lembrada com respeito e oração, pedindo ao Senhor graça, proteção e misericórdia.",
-          "Com estima e ternura, pedimos a Deus que fortaleça sua caminhada e derrame bênçãos sobre você.",
-          "Que o Senhor o envolva com amor, paz e proteção, hoje e sempre, em todos os seus caminhos."
-        ];
+document.body.insertBefore(campoPesquisa, document.getElementById("lista"));
 
-        function limpar(valor) {
-          return (valor || "").replaceAll('"', "").trim();
-        }
+fetch("listas.txt")
+.then(response => response.arrayBuffer())
+.then(buffer => {
 
-        function limparData(valor) {
-          const texto = limpar(valor);
-          if (!texto) return "";
-          return texto.split(" ")[0];
-        }
+const decoder = new TextDecoder("utf-8");
+const text = decoder.decode(buffer);
+const linhas = text.split(/\r?\n/);
 
-        function mensagemPorStatus(vivo, indice) {
-          return vivo
-            ? mensagensVivos[indice % mensagensVivos.length]
-            : mensagensFalecidos[indice % mensagensFalecidos.length];
-        }
+const mensagensFalecidos = [
+"Com carinho e saudade, recordamos sua memória diante de Deus.",
+"Sua lembrança permanece viva em nossos corações.",
+"Rezamos por sua alma com ternura.",
+"Com respeito e saudade lembramos sua história.",
+"Sua memória permanece guardada com amor."
+];
 
-        let html = "";
+const mensagensVivos = [
+"Seguimos em oração por sua vida.",
+"Que Deus abençoe sua caminhada.",
+"Rezamos por sua saúde e proteção.",
+"Que Jesus, Maria e José guardem sua vida.",
+"Você permanece em nossas orações."
+];
 
-        linhas.forEach((linha, indice) => {
-          if (linha.trim() === "") return;
+function limpar(valor){
+return (valor || "").replaceAll('"',"").trim();
+}
 
-          const partes = linha.split(";");
+function limparData(valor){
+const texto = limpar(valor);
+if(!texto) return "";
+return texto.split(" ")[0];
+}
 
-          const status = limpar(partes[2]);
-          const nascimento = limparData(partes[3]);
-          const morte = limparData(partes[4]);
-          const nome = limpar(partes[5]);
-          const cidade = limpar(partes[6]);
+let html = "";
 
-          if (!nome) return;
+linhas.forEach((linha,indice)=>{
 
-          const vivo = status === "Vivo";
+if(linha.trim()==="") return;
 
-          const fundo = vivo ? "#eef4e8" : "#f6ece7";
-          const borda = vivo ? "#7a8f5d" : "#9a6a5a";
-          const titulo = vivo ? "#42552d" : "#6a3d30";
-          const faixa = vivo ? "#dce8cf" : "#ead6cb";
+const partes = linha.split(";");
 
-          html += `
-            <div style="
-              max-width:900px;
-              margin:28px auto;
-              background:${fundo};
-              border:3px solid ${borda};
-              border-radius:14px;
-              box-shadow:0 4px 14px rgba(0,0,0,0.12);
-              overflow:hidden;
-              text-align:left;
-            ">
-              <div style="
-                background:${faixa};
-                border-bottom:2px solid ${borda};
-                padding:16px 22px;
-              ">
-                <h3 style="
-                  margin:0;
-                  font-size:34px;
-                  color:${titulo};
-                ">${nome}</h3>
-              </div>
+const status = limpar(partes[2]);
+const nascimento = limparData(partes[3]);
+const morte = limparData(partes[4]);
+const nome = limpar(partes[5]);
+const cidade = limpar(partes[6]);
 
-              <div style="padding:22px; color:#3c2f24;">
-                <p style="font-size:23px; margin:0 0 10px 0;"><strong>Cidade:</strong> ${cidade}</p>
-                <p style="font-size:23px; margin:0 0 10px 0;"><strong>Nascimento:</strong> ${nascimento}</p>
-                ${
-                  vivo
-                    ? `<p style="font-size:23px; margin:0 0 10px 0;"><strong>Status:</strong> Vivo</p>`
-                    : `<p style="font-size:23px; margin:0 0 10px 0;"><strong>Falecimento:</strong> ${morte}</p>`
-                }
-                <p style="
-                  font-size:22px;
-                  margin:18px 0 0 0;
-                  font-style:italic;
-                  color:#5a4635;
-                  line-height:1.7;
-                ">
-                  ${mensagemPorStatus(vivo, indice)}
-                </p>
-              </div>
-            </div>
-          `;
-        });
+if(!nome) return;
 
-        document.getElementById("lista").innerHTML = html;
-      })
-      const campoPesquisa = document.getElementById("pesquisa");
+const vivo = status === "Vivo";
 
-campoPesquisa.addEventListener("input", function() {
-  const termo = this.value.toLowerCase();
-  const caixas = document.querySelectorAll("#lista > div");
+const fundo = vivo ? "#eef4e8" : "#f6ece7";
+const borda = vivo ? "#7a8f5d" : "#9a6a5a";
+const titulo = vivo ? "#42552d" : "#6a3d30";
+const faixa = vivo ? "#dce8cf" : "#ead6cb";
 
-  caixas.forEach(caixa => {
-    const texto = caixa.innerText.toLowerCase();
-    caixa.style.display = texto.includes(termo) ? "block" : "none";
-  });
+const mensagem = vivo
+? mensagensVivos[indice % mensagensVivos.length]
+: mensagensFalecidos[indice % mensagensFalecidos.length];
+
+html += `
+<div style="
+max-width:900px;
+margin:28px auto;
+background:${fundo};
+border:3px solid ${borda};
+border-radius:14px;
+box-shadow:0 4px 14px rgba(0,0,0,0.12);
+overflow:hidden;
+text-align:left;
+">
+
+<div style="
+background:${faixa};
+border-bottom:2px solid ${borda};
+padding:16px 22px;
+">
+
+<h3 style="margin:0;font-size:34px;color:${titulo};">
+${nome}
+</h3>
+
+</div>
+
+<div style="padding:22px;color:#3c2f24;">
+
+<p style="font-size:23px;"><strong>Cidade:</strong> ${cidade}</p>
+<p style="font-size:23px;"><strong>Nascimento:</strong> ${nascimento}</p>
+
+${
+vivo
+? `<p style="font-size:23px;"><strong>Status:</strong> Vivo</p>`
+: `<p style="font-size:23px;"><strong>Falecimento:</strong> ${morte}</p>`
+}
+
+<p style="font-size:22px;font-style:italic;color:#5a4635;">
+${mensagem}
+</p>
+
+</div>
+</div>
+`;
+
 });
-      .catch(() => {
-        document.getElementById("lista").innerHTML = `
-          <div style="
-            max-width:900px;
-            margin:30px auto;
-            padding:20px;
-            background:#fff4f4;
-            border:2px solid #c98c8c;
-            border-radius:12px;
-            color:#6a2f2f;
-            font-size:22px;
-          ">
-            Não foi possível carregar a lista neste momento.
-          </div>
-        `;
-      });
-  </script>
+
+document.getElementById("lista").innerHTML = html;
+
+/* PESQUISA */
+
+campoPesquisa.addEventListener("input", function(){
+
+const termo = this.value.toLowerCase();
+const caixas = document.querySelectorAll("#lista > div");
+
+caixas.forEach(caixa => {
+
+const texto = caixa.innerText.toLowerCase();
+
+caixa.style.display = texto.includes(termo) ? "block" : "none";
+
+});
+
+});
+
+})
+.catch(()=>{
+
+document.getElementById("lista").innerHTML = `
+<div style="
+max-width:900px;
+margin:30px auto;
+padding:20px;
+background:#fff4f4;
+border:2px solid #c98c8c;
+border-radius:12px;
+color:#6a2f2f;
+font-size:22px;
+">
+Não foi possível carregar a lista.
+</div>
+`;
+
+});
+
+</script>
 
 </body>
 </html>
