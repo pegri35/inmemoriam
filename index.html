@@ -1,147 +1,213 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>In Memoriam</title>
+  <meta charset="UTF-8">
+  <title>In Memoriam</title>
 </head>
 
-<body style="font-family:Arial; text-align:center; margin-top:80px;">
+<body style="margin:0; background:#e9e7e1; font-family:Georgia, serif; text-align:center;">
 
-<h1>In Memoriam</h1>
+  <div style="max-width:1100px; margin:0 auto; padding:40px 20px;">
 
-<p>Este site é uma homenagem em memória.</p>
+    <h1 style="font-size:56px; margin-bottom:10px; color:#2f2418;">In Memoriam</h1>
 
-<div style="
-max-width:900px;
-margin:40px auto;
-padding:25px;
-background:#f5f1e6;
-border:3px solid #8b7d5a;
-border-radius:12px;
-box-shadow:0 0 15px rgba(0,0,0,0.2);
-font-family:Georgia, serif;
-line-height:1.6;
-">
+    <p style="font-size:24px; color:#5b4a35; margin-bottom:40px;">
+      Este site é uma homenagem em memória.
+    </p>
 
-<h2 style="color:#5a4632;">Memória, Oração e Comunhão</h2>
+    <div style="
+      max-width:920px;
+      margin:40px auto;
+      padding:30px;
+      background:#f5f1e6;
+      border:3px solid #8b7d5a;
+      border-radius:14px;
+      box-shadow:0 0 18px rgba(0,0,0,0.18);
+      color:#3f3123;
+      line-height:1.8;
+    ">
+      <h2 style="margin-top:0; font-size:40px; color:#6a4b2f;">
+        Memória, Oração e Comunhão
+      </h2>
 
-<p>
-Neste espaço recordamos com carinho aqueles que já partiram desta vida
-e também aqueles que continuam sua caminhada entre nós.
-</p>
+      <p style="font-size:24px;">
+        Neste espaço recordamos com carinho aqueles que já partiram desta vida
+        e também aqueles que continuam sua caminhada entre nós.
+      </p>
 
-<p>
-A memória dos falecidos é um gesto de amor e gratidão. Recordar seus nomes
-é manter viva a história, a fé e os laços que Deus permitiu que existissem
-entre nós. Ao lembrar daqueles que já partiram, elevamos nossas orações
-pedindo descanso eterno e luz para suas almas.
-</p>
+      <p style="font-size:24px;">
+        A memória dos falecidos é um gesto de amor, gratidão e fidelidade.
+        Recordar seus nomes é manter viva a história, a fé e os laços que Deus
+        permitiu que existissem entre nós. Ao lembrar daqueles que já partiram,
+        elevamos nossas orações pedindo descanso eterno, paz e luz para suas almas.
+      </p>
 
-<p>
-Também colocamos em oração todos os que permanecem vivos nesta lista,
-pedindo proteção, saúde, paz e a presença constante da graça de Deus
-em suas vidas.
-</p>
+      <p style="font-size:24px;">
+        Também colocamos em oração todos os que permanecem vivos nesta lista,
+        pedindo proteção, saúde, serenidade, esperança e a presença constante
+        da graça de Deus em suas vidas.
+      </p>
 
-<p>
-Pedimos a intercessão de <strong>São José</strong>, guardião das famílias,
-de <strong>Maria Santíssima</strong>, nossa mãe amorosa, e de
-<strong>Nosso Senhor Jesus Cristo</strong>, fonte de toda misericórdia.
-</p>
+      <p style="font-size:24px;">
+        Pedimos a intercessão de <strong>São José</strong>, guardião das famílias,
+        de <strong>Maria Santíssima</strong>, nossa Mãe amorosa, e de
+        <strong>Nosso Senhor Jesus Cristo</strong>, fonte de toda misericórdia,
+        consolo e salvação.
+      </p>
 
-<p>
-Que também os <strong>Santos Anjos da Guarda</strong> acompanhem cada nome
-aqui presente, protegendo, guiando e iluminando seus caminhos.
-</p>
+      <p style="font-size:24px;">
+        Que também os <strong>Santos Anjos da Guarda</strong> acompanhem cada nome
+        aqui presente, protegendo, guiando, iluminando e apresentando a Deus
+        nossas súplicas com amor e fidelidade.
+      </p>
 
-<p>
-Que Deus abençoe a todos os que estão nesta memória,
-os que já partiram e os que continuam sua jornada,
-com paz, esperança e amor.
-</p>
+      <p style="font-size:24px; margin-bottom:0;">
+        Que Deus abençoe a todos os que estão nesta memória:
+        os que já partiram e os que continuam sua jornada,
+        envolvendo cada vida com paz, amor e misericórdia.
+      </p>
+    </div>
 
-</div>
+    <div id="lista"></div>
 
-<div id="lista"></div>
+  </div>
 
-<script>
-fetch("listas.txt")
-  .then(response => response.arrayBuffer())
-  .then(buffer => {
-    const decoder = new TextDecoder("windows-1252");
-    const text = decoder.decode(buffer);
-    const linhas = text.split(/\r?\n/);
+  <script>
+    fetch("listas.txt")
+      .then(response => response.arrayBuffer())
+      .then(buffer => {
+        const decoder = new TextDecoder("windows-1252");
+        const text = decoder.decode(buffer);
+        const linhas = text.split(/\r?\n/);
 
-    const mensagensFalecidos = [
-      "Com carinho e saudade, sua memória permanece viva em nossos corações.",
-      "Sua lembrança continua iluminando a vida de todos que o conheceram.",
-      "Com respeito e afeto, recordamos sua história e sua presença.",
-      "A saudade permanece, mas também a gratidão por sua vida.",
-      "Sua memória é guardada com amor e ternura."
-    ];
+        const mensagensFalecidos = [
+          "Com carinho e saudade, recordamos sua memória diante de Deus, certos de que o amor jamais se apaga.",
+          "Sua lembrança permanece viva em nossos corações, acompanhada de oração, respeito e eterna gratidão.",
+          "Rezamos por sua alma com ternura, confiando sua vida à misericórdia infinita de Jesus.",
+          "Sua história continua presente entre nós como sinal de amor, memória e saudade bendita.",
+          "Com afeto e oração, entregamos sua memória ao cuidado de Deus e à proteção da Virgem Maria.",
+          "Seu nome permanece guardado com honra e carinho na lembrança de todos os que o amaram.",
+          "Recordamos sua vida com respeito e saudade, pedindo ao Senhor o descanso eterno e a luz sem fim.",
+          "A memória de quem partiu continua fecunda no coração daqueles que creem, amam e rezam.",
+          "Com profunda estima, elevamos preces por sua alma e agradecemos a Deus por sua existência.",
+          "Sua lembrança segue iluminada pela fé, pela oração e pela esperança da vida eterna."
+        ];
 
-    const mensagensVivos = [
-      "Seguimos em contínua oração por sua vida e caminhada.",
-      "Receba nosso carinho e nossas orações.",
-      "Que Deus abençoe sua jornada com paz e proteção.",
-      "Com fé e esperança, colocamos sua vida em oração.",
-      "Desejamos luz, saúde e bênçãos em sua caminhada."
-    ];
+        const mensagensVivos = [
+          "Seguimos em contínua oração por sua vida, pedindo a Deus paz, saúde, proteção e muitas bênçãos.",
+          "Com carinho fraterno, colocamos sua caminhada nas mãos do Senhor, confiando em sua graça.",
+          "Que Jesus, Maria e São José guardem sua vida e conduzam seus passos com amor e proteção.",
+          "Você permanece presente em nossas orações, com votos de serenidade, força e esperança.",
+          "Rezamos para que Deus abençoe sua história com luz, cuidado, saúde e paz no coração.",
+          "Com afeto e fé, entregamos sua vida ao cuidado divino e à proteção dos Santos Anjos da Guarda.",
+          "Que nunca lhe faltem consolo, esperança, saúde e a presença amorosa de Deus em seus dias.",
+          "Sua vida é lembrada com respeito e oração, pedindo ao Senhor graça, proteção e misericórdia.",
+          "Com estima e ternura, pedimos a Deus que fortaleça sua caminhada e derrame bênçãos sobre você.",
+          "Que o Senhor o envolva com amor, paz e proteção, hoje e sempre, em todos os seus caminhos."
+        ];
 
-    function limpar(v){
-      return (v || "").replaceAll('"','').trim();
-    }
-
-    function limparData(v){
-      const t = limpar(v);
-      return t ? t.split(" ")[0] : "";
-    }
-
-    let html = "";
-
-    linhas.forEach((linha,i)=>{
-      if(linha.trim()!==""){
-        const p = linha.split(";");
-
-        const status = limpar(p[2]);
-        const nascimento = limparData(p[3]);
-        const morte = limparData(p[4]);
-        const nome = limpar(p[5]);
-        const cidade = limpar(p[6]);
-
-        if(nome){
-
-          const vivo = status==="Vivo";
-
-          const fundo = vivo ? "#eef6ee" : "#f7eeee";
-          const borda = vivo ? "#6e9b6e" : "#a96a6a";
-
-          const msg = vivo
-            ? mensagensVivos[i % mensagensVivos.length]
-            : mensagensFalecidos[i % mensagensFalecidos.length];
-
-          html += "<div style='max-width:760px;margin:20px auto;padding:18px;background:"+fundo+";border:2px solid "+borda+";border-radius:14px;text-align:left;'>";
-
-          html += "<h3>"+nome+"</h3>";
-          html += "<p><b>Cidade:</b> "+cidade+"</p>";
-          html += "<p><b>Nascimento:</b> "+nascimento+"</p>";
-
-          if(vivo){
-            html += "<p><b>Status:</b> Vivo</p>";
-          } else {
-            html += "<p><b>Falecimento:</b> "+morte+"</p>";
-          }
-
-          html += "<p style='font-style:italic;margin-top:10px;'>"+msg+"</p>";
-
-          html += "</div>";
+        function limpar(valor) {
+          return (valor || "").replaceAll('"', "").trim();
         }
-      }
-    });
 
-    document.getElementById("lista").innerHTML = html;
-  });
-</script>
+        function limparData(valor) {
+          const texto = limpar(valor);
+          if (!texto) return "";
+          return texto.split(" ")[0];
+        }
+
+        function mensagemPorStatus(vivo, indice) {
+          return vivo
+            ? mensagensVivos[indice % mensagensVivos.length]
+            : mensagensFalecidos[indice % mensagensFalecidos.length];
+        }
+
+        let html = "";
+
+        linhas.forEach((linha, indice) => {
+          if (linha.trim() === "") return;
+
+          const partes = linha.split(";");
+
+          const status = limpar(partes[2]);
+          const nascimento = limparData(partes[3]);
+          const morte = limparData(partes[4]);
+          const nome = limpar(partes[5]);
+          const cidade = limpar(partes[6]);
+
+          if (!nome) return;
+
+          const vivo = status === "Vivo";
+
+          const fundo = vivo ? "#eef4e8" : "#f6ece7";
+          const borda = vivo ? "#7a8f5d" : "#9a6a5a";
+          const titulo = vivo ? "#42552d" : "#6a3d30";
+          const faixa = vivo ? "#dce8cf" : "#ead6cb";
+
+          html += `
+            <div style="
+              max-width:900px;
+              margin:28px auto;
+              background:${fundo};
+              border:3px solid ${borda};
+              border-radius:14px;
+              box-shadow:0 4px 14px rgba(0,0,0,0.12);
+              overflow:hidden;
+              text-align:left;
+            ">
+              <div style="
+                background:${faixa};
+                border-bottom:2px solid ${borda};
+                padding:16px 22px;
+              ">
+                <h3 style="
+                  margin:0;
+                  font-size:34px;
+                  color:${titulo};
+                ">${nome}</h3>
+              </div>
+
+              <div style="padding:22px; color:#3c2f24;">
+                <p style="font-size:23px; margin:0 0 10px 0;"><strong>Cidade:</strong> ${cidade}</p>
+                <p style="font-size:23px; margin:0 0 10px 0;"><strong>Nascimento:</strong> ${nascimento}</p>
+                ${
+                  vivo
+                    ? `<p style="font-size:23px; margin:0 0 10px 0;"><strong>Status:</strong> Vivo</p>`
+                    : `<p style="font-size:23px; margin:0 0 10px 0;"><strong>Falecimento:</strong> ${morte}</p>`
+                }
+                <p style="
+                  font-size:22px;
+                  margin:18px 0 0 0;
+                  font-style:italic;
+                  color:#5a4635;
+                  line-height:1.7;
+                ">
+                  ${mensagemPorStatus(vivo, indice)}
+                </p>
+              </div>
+            </div>
+          `;
+        });
+
+        document.getElementById("lista").innerHTML = html;
+      })
+      .catch(() => {
+        document.getElementById("lista").innerHTML = `
+          <div style="
+            max-width:900px;
+            margin:30px auto;
+            padding:20px;
+            background:#fff4f4;
+            border:2px solid #c98c8c;
+            border-radius:12px;
+            color:#6a2f2f;
+            font-size:22px;
+          ">
+            Não foi possível carregar a lista neste momento.
+          </div>
+        `;
+      });
+  </script>
 
 </body>
 </html>
