@@ -17,17 +17,22 @@
 
 <script>
 fetch("listas.txt")
-  .then(response => response.text())
-  .then(text => {
-    const linhas = text.split("\n");
-    let html = "<ul>";
+  .then(response => response.arrayBuffer())
+  .then(buffer => {
+    const decoder = new TextDecoder("windows-1252");
+    const text = decoder.decode(buffer);
+
+    const linhas = text.split(/\r?\n/);
+    let html = "<ul style='list-style:none; padding:0;'>";
 
     linhas.forEach(linha => {
-      if(linha.trim() !== ""){
+      if (linha.trim() !== "") {
         const partes = linha.split(";");
-        const nome = partes[5];
-        const cidade = partes[6];
-        html += "<li>" + nome + " - " + cidade + "</li>";
+        const nome = (partes[5] || "").replaceAll('"', '').trim();
+        const cidade = (partes[6] || "").replaceAll('"', '').trim();
+        if (nome) {
+          html += "<li style='margin:8px 0;'>" + nome + " - " + cidade + "</li>";
+        }
       }
     });
 
