@@ -23,30 +23,75 @@ fetch("listas.txt")
     const text = decoder.decode(buffer);
     const linhas = text.split(/\r?\n/);
 
+    const mensagensFalecidos = [
+      "Com carinho e saudade, sua memória permanece viva em nossos corações.",
+      "Sua lembrança continua iluminando a vida de todos que o conheceram.",
+      "Com respeito e afeto, recordamos sua história e sua presença tão especial.",
+      "A saudade permanece, mas também a gratidão por tudo o que deixou entre nós.",
+      "Sua memória é guardada com amor, ternura e eterna homenagem.",
+      "Que sua lembrança siga trazendo paz, amor e inspiração para todos.",
+      "Com muita saudade, homenageamos uma vida que jamais será esquecida.",
+      "Seu nome permanece marcado com carinho na memória de quem o amou.",
+      "Recordamos com afeto a caminhada e o legado deixado entre nós.",
+      "Sua presença virou lembrança, e sua lembrança virou eternidade em nossos corações."
+    ];
+
+    const mensagensVivos = [
+      "Seguimos em contínua oração, com carinho e bênçãos para sua vida.",
+      "Receba nosso afeto e nossas orações, com votos de paz e proteção.",
+      "Que Deus abençoe sua caminhada com saúde, luz e serenidade.",
+      "Com carinho, colocamos sua vida em oração e pedimos muitas graças.",
+      "Que sua jornada seja sempre acompanhada de paz, esperança e amor.",
+      "Com ternura e fé, mantemos você em nossas orações diárias.",
+      "Desejamos bênçãos, proteção e muita luz para sua vida.",
+      "Com afeto fraterno, rezamos por você e por sua caminhada.",
+      "Que nunca lhe faltem paz, cuidado divino e pessoas de bom coração ao redor.",
+      "Você está presente em nossas orações, com carinho, respeito e esperança."
+    ];
+
+    function limpar(valor) {
+      return (valor || "").replaceAll('"', '').trim();
+    }
+
+    function limparData(valor) {
+      const texto = limpar(valor);
+      if (!texto) return "";
+      return texto.split(" ")[0];
+    }
+
     let html = "";
 
-    linhas.forEach(linha => {
+    linhas.forEach((linha, indice) => {
       if (linha.trim() !== "") {
         const partes = linha.split(";");
 
-        const status = (partes[2] || "").replaceAll('"', '').trim();
-        const nascimento = (partes[3] || "").replaceAll('"', '').trim();
-        const morte = (partes[4] || "").replaceAll('"', '').trim();
-        const nome = (partes[5] || "").replaceAll('"', '').trim();
-        const cidade = (partes[6] || "").replaceAll('"', '').trim();
+        const status = limpar(partes[2]);
+        const nascimento = limparData(partes[3]);
+        const morte = limparData(partes[4]);
+        const nome = limpar(partes[5]);
+        const cidade = limpar(partes[6]);
 
         if (nome) {
-          html += "<div style='max-width:700px; margin:20px auto; padding:15px; border:1px solid #ccc; border-radius:10px; text-align:left;'>";
-          html += "<h3 style='margin:0 0 10px 0;'>" + nome + "</h3>";
+          const vivo = status === "Vivo";
+          const corFundo = vivo ? "#eef8ee" : "#fff1f1";
+          const corBorda = vivo ? "#7bbf7b" : "#d88a8a";
+          const corTitulo = vivo ? "#216b21" : "#8b2e2e";
+          const mensagem = vivo
+            ? mensagensVivos[indice % mensagensVivos.length]
+            : mensagensFalecidos[indice % mensagensFalecidos.length];
+
+          html += "<div style='max-width:760px; margin:20px auto; padding:18px; border:2px solid " + corBorda + "; background:" + corFundo + "; border-radius:14px; text-align:left; box-shadow:0 2px 8px rgba(0,0,0,0.08);'>";
+          html += "<h3 style='margin:0 0 10px 0; color:" + corTitulo + ";'>" + nome + "</h3>";
           html += "<p><strong>Cidade:</strong> " + cidade + "</p>";
           html += "<p><strong>Nascimento:</strong> " + nascimento + "</p>";
 
-          if (status === "Vivo") {
+          if (vivo) {
             html += "<p><strong>Status:</strong> Vivo</p>";
           } else {
             html += "<p><strong>Falecimento:</strong> " + morte + "</p>";
           }
 
+          html += "<p style='margin-top:12px; font-style:italic; color:#444;'>" + mensagem + "</p>";
           html += "</div>";
         }
       }
